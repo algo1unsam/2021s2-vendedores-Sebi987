@@ -1,0 +1,21 @@
+import vendedores.*
+import centrosDeDistribucion.*
+
+describe "test de vendedores"{
+
+	const LopezyLopez = new CentroDistribucion()
+	const otroCentroDistribucion2 = new CentroDistribucion()
+	
+	const buenosAires = new Provincia(poblacion = 10000)
+	const pergamino = new Ciudad(provincia = buenosAires)
+	
+	const hernan_VF = new Fijo(ciudad = pergamino)
+	
+	
+	var vendedor
+	
+	test "vendedores"{
+		
+	}
+	
+}
