@@ -1,9 +1,8 @@
 import vendedores.*
 
 class CentroDistribucion {
-	
 	var vendedores = []
-	
+
 }
 
 class Ciudad{

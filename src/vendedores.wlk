@@ -1,3 +1,5 @@
+import centrosDeDistribucion.*
+
 class Vendedor{
 	var certificaciones = []
 	
@@ -5,6 +7,7 @@ class Vendedor{
 	method tieneCertificadoDeProducto() = certificaciones.any{ c => c.esDeProducto() }
 	method tieneCertificadoQueNoEsDeProducto() = certificaciones.any{ c => !c.esDeProducto() }
 	
+	method esFirme() = certificaciones.sum() >= 30
 	method esInfluyente() = false
 }
 
@@ -13,7 +16,6 @@ class Fijo inherits Vendedor{
 	
 	method puedeTrabajarEn(unaCiudad) = unaCiudad == ciudad
 	
-
 }
 
 class Viajante inherits Vendedor{
@@ -33,7 +35,6 @@ class ComercioCorresponsal inherits Vendedor{
 	
 	method estaEnMuchasProvincias() = ciudades.map{ c => c.provincia() }.withoutDuplicates().size() >= 3
 }
-
 
 
 class Certificacion{
