@@ -2,20 +2,35 @@ import vendedores.*
 import centrosDeDistribucion.*
 
 describe "test de vendedores"{
-
-	const LopezyLopez = new CentroDistribucion()
-	const otroCentroDistribucion2 = new CentroDistribucion()
 	
-	const buenosAires = new Provincia(poblacion = 10000)
-	const pergamino = new Ciudad(provincia = buenosAires)
-	
-	const hernan_VF = new Fijo(ciudad = pergamino)
-	
-	
-	var vendedor
-	
-	test "vendedores"{
+	test "prueba de vendedor con centro"{
+		const buenosAires = new Provincia(poblacion = 10000)
+		const entreRios = new Provincia(poblacion = 15000)
+		const Caseros = new Ciudad(provincia = buenosAires)
+		const Concordia = new Ciudad(provincia = entreRios)
 		
+		const telecom = new CentroDistribucion(ciudad = Caseros)
+		
+		const sebas = new Fijo(ciudad = Caseros)
+		const jorge = new Viajante()
+		jorge.agregarProvincia(buenosAires)
+		
+		const uno = new Certificacion(puntos = 20)
+		const dos = new Certificacion(puntos = 10)
+		const tres = new Certificacion(puntos = 10)
+		
+		sebas.agregarCertificacion(uno)
+		sebas.agregarCertificacion(dos)
+		sebas.esFirme()
+		assert.equals(true,sebas.esFirme())
+		jorge.agregarCertificacion(uno)
+		assert.equals(false,jorge.esFirme())
+		
+		telecom.agregarVendedor(sebas)
+		telecom.agregarVendedor(jorge)
+		
+		telecom.vendedorEstrella()
+		assert.equals(sebas,telecom.vendedorEstrella())
 	}
 	
 }

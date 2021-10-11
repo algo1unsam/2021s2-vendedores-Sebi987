@@ -1,10 +1,5 @@
 class Vendedor{
 	var certificaciones = []
-	var totalPuntos = certificaciones.sum{certificacion => certificacion.puntos()}
-	
-	method puntosTotales(){
-		return totalPuntos
-	}
 	
 	method agregarCertificacion(unaCertificacion) = certificaciones.add(unaCertificacion)
 
@@ -29,7 +24,7 @@ class Fijo inherits Vendedor{
 class Viajante inherits Vendedor{
 	var provincias = []
 	
-	method agregarProvincias(unaProvincia) = provincias.add(unaProvincia)
+	method agregarProvincia(unaProvincia) = provincias.add(unaProvincia)
 	
 	method puedeTrabajarEn(unaCiudad) = provincias.contains(unaCiudad.provincia())
 	
@@ -39,7 +34,7 @@ class Viajante inherits Vendedor{
 class ComercioCorresponsal inherits Vendedor{
 	var ciudades = []
 	
-	method agregarCiudades(unaCiudad) = ciudades.add(unaCiudad)
+	method agregarCiudad(unaCiudad) = ciudades.add(unaCiudad)
 	
 	method puedeTrabajarEn(unaCiudad) = ciudades.contains(unaCiudad)
 	

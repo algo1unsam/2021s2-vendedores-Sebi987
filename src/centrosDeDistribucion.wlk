@@ -5,7 +5,7 @@ class CentroDistribucion {
 	var ciudad
 	
 	method ubicacion(unaCiudad) = unaCiudad == ciudad
-		
+	
 	method agregarVendedor(unVendedor){
 		if (vendedores.contains(unVendedor)){self.error("Este Trabajador ya existe en este Centro")}else{vendedores.add(unVendedor)}
 		}
@@ -21,5 +21,4 @@ class Ciudad{
 
 class Provincia {
 	var property poblacion
-	
 }
