@@ -1,18 +1,26 @@
-import centrosDeDistribucion.*
-
 class Vendedor{
 	var certificaciones = []
+	var totalPuntos = certificaciones.sum{certificacion => certificacion.puntos()}
 	
+	method puntosTotales(){
+		return totalPuntos
+	}
+	
+	method agregarCertificacion(unaCertificacion) = certificaciones.add(unaCertificacion)
+
 	method esVersatil() = certificaciones.size() >= 3 and self.tieneCertificadoDeProducto() and self.tieneCertificadoQueNoEsDeProducto()
 	method tieneCertificadoDeProducto() = certificaciones.any{ c => c.esDeProducto() }
 	method tieneCertificadoQueNoEsDeProducto() = certificaciones.any{ c => !c.esDeProducto() }
 	
-	method esFirme() = certificaciones.sum() >= 30
+	method esFirme(){ 
+		return certificaciones.sum{certificacion => certificacion.puntos()} >= 30
+	}
+	
 	method esInfluyente() = false
 }
 
 class Fijo inherits Vendedor{
-	var ciudad
+	var property ciudad
 	
 	method puedeTrabajarEn(unaCiudad) = unaCiudad == ciudad
 	
@@ -21,6 +29,8 @@ class Fijo inherits Vendedor{
 class Viajante inherits Vendedor{
 	var provincias = []
 	
+	method agregarProvincias(unaProvincia) = provincias.add(unaProvincia)
+	
 	method puedeTrabajarEn(unaCiudad) = provincias.contains(unaCiudad.provincia())
 	
 	override method esInfluyente() = provincias.sum({p => p.poblacion()}) >= 10000000
@@ -28,6 +38,8 @@ class Viajante inherits Vendedor{
 
 class ComercioCorresponsal inherits Vendedor{
 	var ciudades = []
+	
+	method agregarCiudades(unaCiudad) = ciudades.add(unaCiudad)
 	
 	method puedeTrabajarEn(unaCiudad) = ciudades.contains(unaCiudad)
 	
@@ -39,7 +51,7 @@ class ComercioCorresponsal inherits Vendedor{
 
 class Certificacion{
 	
-	const puntos
+	const property puntos
 	var property esDeProducto = false
 	
 }
