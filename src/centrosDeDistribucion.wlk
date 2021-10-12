@@ -10,7 +10,7 @@ class CentroDistribucion {
 		if (vendedores.contains(unVendedor)){self.error("Este Trabajador ya existe en este Centro")}else{vendedores.add(unVendedor)}
 		}
 		
-	method vendedorEstrella() = vendedores.max()
+	method vendedorEstrella() = vendedores.max{unVendedor => unVendedor.totalPuntos()}
 }
 
 class Ciudad{

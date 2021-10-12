@@ -1,6 +1,10 @@
 class Vendedor{
 	var certificaciones = []
 	
+	method totalPuntos(){
+		return certificaciones.sum{i => i.puntos()}
+	}
+	
 	method agregarCertificacion(unaCertificacion) = certificaciones.add(unaCertificacion)
 
 	method esVersatil() = certificaciones.size() >= 3 and self.tieneCertificadoDeProducto() and self.tieneCertificadoQueNoEsDeProducto()
@@ -8,7 +12,7 @@ class Vendedor{
 	method tieneCertificadoQueNoEsDeProducto() = certificaciones.any{ c => !c.esDeProducto() }
 	
 	method esFirme(){ 
-		return certificaciones.sum{certificacion => certificacion.puntos()} >= 30
+		return self.totalPuntos() >= 30
 	}
 	
 	method esInfluyente() = false
