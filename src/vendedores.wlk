@@ -1,12 +1,12 @@
 class Vendedor{
 	var certificaciones = []
+	method agregarCertificacion(unaCertificacion) = certificaciones.add(unaCertificacion)
 	
 	method totalPuntos(){
 		return certificaciones.sum{i => i.puntos()}
 	}
 	
-	method agregarCertificacion(unaCertificacion) = certificaciones.add(unaCertificacion)
-
+		
 	method esVersatil() = certificaciones.size() >= 3 and self.tieneCertificadoDeProducto() and self.tieneCertificadoQueNoEsDeProducto()
 	method tieneCertificadoDeProducto() = certificaciones.any{ c => c.esDeProducto() }
 	method tieneCertificadoQueNoEsDeProducto() = certificaciones.any{ c => !c.esDeProducto() }
@@ -16,6 +16,7 @@ class Vendedor{
 	}
 	
 	method esInfluyente() = false
+
 }
 
 class Fijo inherits Vendedor{
@@ -52,5 +53,6 @@ class Certificacion{
 	
 	const property puntos
 	var property esDeProducto = false
+
 	
 }

@@ -3,7 +3,7 @@ import centrosDeDistribucion.*
 
 describe "test de vendedores"{
 	
-	test "prueba de vendedor con centro"{
+only test "prueba de vendedor con centro"{
 		const buenosAires = new Provincia(poblacion = 10000)
 		const entreRios = new Provincia(poblacion = 15000)
 		const Caseros = new Ciudad(provincia = buenosAires)
@@ -12,10 +12,11 @@ describe "test de vendedores"{
 		const telecom = new CentroDistribucion(ciudad = Caseros)
 		
 		const sebas = new Fijo(ciudad = Caseros)
+		const martin = new Fijo(ciudad = Caseros)
 		const jorge = new Viajante()
 		jorge.agregarProvincia(buenosAires)
 		
-		const uno = new Certificacion(puntos = 20)
+		const uno = new Certificacion(puntos = 20,esDeProducto = true)
 		const dos = new Certificacion(puntos = 10)
 		const tres = new Certificacion(puntos = 10)
 		
@@ -24,15 +25,22 @@ describe "test de vendedores"{
 		sebas.esFirme()
 		assert.equals(true,sebas.esFirme())
 		jorge.agregarCertificacion(uno)
-		assert.equals(false,jorge.esFirme())
+		jorge.agregarCertificacion(dos)
+		assert.equals(true,jorge.esFirme())
+		martin.agregarCertificacion(uno)
+		martin.agregarCertificacion(dos)
+		assert.equals(true,martin.esFirme())
 		
 		telecom.agregarVendedor(sebas)
 		telecom.agregarVendedor(jorge)
+		telecom.agregarVendedor(martin)
 		
 		telecom.vendedorEstrella()
 		assert.equals(sebas,telecom.vendedorEstrella())
 		
 		telecom.cubrirCiudad(Caseros)
+		
+		assert.equals([sebas,jorge,martin],telecom.vendedoresGenericos())
 	}
 	
 }

@@ -1,8 +1,7 @@
 import vendedores.*
 
 class CentroDistribucion {
-	var vendedores = []
-	var vendedoresGenericos = [] 
+	var vendedores = [] 
 	var ciudad
 	
 	method ubicacion(unaCiudad) = unaCiudad == ciudad
@@ -15,6 +14,9 @@ class CentroDistribucion {
 	
 	method cubrirCiudad(unaCiudad) = vendedores.any{unVendedor => unVendedor.puedeTrabajarEn(unaCiudad)}
 	
+	method vendedoresGenericos(){
+		return vendedores.filter{unVendedor => unVendedor.tieneCertificadoQueNoEsDeProducto()}
+	}
 	
 }
 
