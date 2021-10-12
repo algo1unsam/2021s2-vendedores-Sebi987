@@ -2,6 +2,7 @@ import vendedores.*
 
 class CentroDistribucion {
 	var vendedores = []
+	var vendedoresGenericos = [] 
 	var ciudad
 	
 	method ubicacion(unaCiudad) = unaCiudad == ciudad
@@ -11,6 +12,10 @@ class CentroDistribucion {
 		}
 		
 	method vendedorEstrella() = vendedores.max{unVendedor => unVendedor.totalPuntos()}
+	
+	method cubrirCiudad(unaCiudad) = vendedores.any{unVendedor => unVendedor.puedeTrabajarEn(unaCiudad)}
+	
+	
 }
 
 class Ciudad{

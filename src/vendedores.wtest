@@ -31,6 +31,8 @@ describe "test de vendedores"{
 		
 		telecom.vendedorEstrella()
 		assert.equals(sebas,telecom.vendedorEstrella())
+		
+		telecom.cubrirCiudad(Caseros)
 	}
 	
 }
