@@ -3,6 +3,7 @@ import vendedores.*
 class CentroDistribucion {
 	var vendedores = [] 
 	var sucursales = []
+	var clientes = []
 	var ciudad
 	
 	method ubicacion(unaCiudad) = unaCiudad == ciudad
@@ -31,7 +32,8 @@ class CentroDistribucion {
 	
 	method vendedorCandidato() = vendedores.filter{unVendedor => unVendedor.puedeTrabajarEn(ciudad) and unVendedor.esVersatil()}
 	
-	
+	method atenderClienteInseguro() = vendedores.filter{unVendedor => unVendedor.esVersatil() and unVendedor.esFirme()}
+	method atenderClienteDetallista() = vendedores.filter{unVendedor => unVendedor.totalCertificacionesEsProducto() >= 3}
 	
 }
 
@@ -52,8 +54,10 @@ class SucursalDelCentro{
 }
 
 class CertificacionCentro{
-	
 	const property puntos
 	var property esDeProducto = false
-	
 }
+
+class ClienteInseguro{}
+class ClienteDetallista{}
+class ClienteHumanista{}

@@ -51,7 +51,7 @@ describe "test de vendedores"{
 		const cuatro = new CertificacionCentro(puntos = 50)
 		telecom.repartirCertificacion(cuatro)
 		assert.equals([sebas,jorge,martin,agus],telecom.vendedoresGenericos())
-		assert.equals([sebas,jorge,martin,agus],telecom.afinidad())
+		assert.equals([sebas,jorge,martin],telecom.vendedorCandidato())
 	}
 	
 }

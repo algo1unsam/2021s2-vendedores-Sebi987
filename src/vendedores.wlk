@@ -6,7 +6,10 @@ class Vendedor{
 		return certificaciones.sum{i => i.puntos()}
 	}
 	
-		
+	method totalCertificacionesEsProducto(){
+		return certificaciones.count{unaCertificacion => unaCertificacion.esDeProducto()}
+	}
+	
 	method esVersatil() = certificaciones.size() >= 3 and self.tieneCertificadoDeProducto() and self.tieneCertificadoQueNoEsDeProducto()
 	method tieneCertificadoDeProducto() = certificaciones.any{ c => c.esDeProducto() }
 	method tieneCertificadoQueNoEsDeProducto() = certificaciones.any{ c => !c.esDeProducto() }
