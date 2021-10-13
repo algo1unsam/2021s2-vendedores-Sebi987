@@ -2,23 +2,27 @@ import vendedores.*
 import centrosDeDistribucion.*
 
 describe "test de vendedores"{
-	
-only test "prueba de vendedor con centro"{
 		const buenosAires = new Provincia(poblacion = 10000)
 		const entreRios = new Provincia(poblacion = 15000)
 		const Caseros = new Ciudad(provincia = buenosAires)
 		const Concordia = new Ciudad(provincia = entreRios)
 		
 		const telecom = new CentroDistribucion(ciudad = Caseros)
+		const sucursal1 = new SucursalDelCentro(ciudad = Concordia)
 		
 		const sebas = new Fijo(ciudad = Caseros)
 		const martin = new Fijo(ciudad = Caseros)
 		const jorge = new Viajante()
-		jorge.agregarProvincia(buenosAires)
+		const agus = new Fijo(ciudad = Caseros)
+		const paola = new ComercioCorresponsal()
 		
 		const uno = new Certificacion(puntos = 20,esDeProducto = true)
 		const dos = new Certificacion(puntos = 10)
 		const tres = new Certificacion(puntos = 10)
+
+	test "prueba de vendedor con centro"{
+		telecom.agregarSucursal(sucursal1)
+		jorge.agregarProvincia(buenosAires)
 		
 		sebas.agregarCertificacion(uno)
 		sebas.agregarCertificacion(dos)
@@ -34,6 +38,7 @@ only test "prueba de vendedor con centro"{
 		telecom.agregarVendedor(sebas)
 		telecom.agregarVendedor(jorge)
 		telecom.agregarVendedor(martin)
+		telecom.agregarVendedor(agus)
 		
 		telecom.vendedorEstrella()
 		assert.equals(sebas,telecom.vendedorEstrella())
@@ -42,6 +47,11 @@ only test "prueba de vendedor con centro"{
 		
 		assert.equals([sebas,jorge,martin],telecom.vendedoresGenericos())
 		assert.equals(true,telecom.esRobusto())
+		
+		const cuatro = new CertificacionCentro(puntos = 50)
+		telecom.repartirCertificacion(cuatro)
+		assert.equals([sebas,jorge,martin,agus],telecom.vendedoresGenericos())
+		assert.equals([sebas,jorge,martin,agus],telecom.afinidad())
 	}
 	
 }
