@@ -18,6 +18,10 @@ class CentroDistribucion {
 		return vendedores.filter{unVendedor => unVendedor.tieneCertificadoQueNoEsDeProducto()}
 	}
 	
+	method esRobusto(){
+		return vendedores.count{unVendedor => unVendedor.esFirme()} >= 3
+	}
+	
 }
 
 class Ciudad{

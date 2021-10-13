@@ -41,6 +41,7 @@ only test "prueba de vendedor con centro"{
 		telecom.cubrirCiudad(Caseros)
 		
 		assert.equals([sebas,jorge,martin],telecom.vendedoresGenericos())
+		assert.equals(true,telecom.esRobusto())
 	}
 	
 }
