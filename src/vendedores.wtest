@@ -14,7 +14,7 @@ describe "test de vendedores"{
 		const martin = new Fijo(ciudad = Caseros)
 		const jorge = new Viajante()
 		const agus = new Fijo(ciudad = Caseros)
-		const paola = new ComercioCorresponsal()
+
 		
 		const uno = new Certificacion(puntos = 20,esDeProducto = true)
 		const dos = new Certificacion(puntos = 10)
@@ -32,7 +32,8 @@ describe "test de vendedores"{
 		jorge.agregarCertificacion(dos)
 		assert.equals(true,jorge.esFirme())
 		martin.agregarCertificacion(uno)
-		martin.agregarCertificacion(dos)
+		martin.agregarCertificacion(uno)
+		martin.agregarCertificacion(uno)
 		assert.equals(true,martin.esFirme())
 		
 		telecom.agregarVendedor(sebas)
@@ -41,17 +42,20 @@ describe "test de vendedores"{
 		telecom.agregarVendedor(agus)
 		
 		telecom.vendedorEstrella()
-		assert.equals(sebas,telecom.vendedorEstrella())
+		assert.equals(martin,telecom.vendedorEstrella())
 		
 		telecom.cubrirCiudad(Caseros)
 		
-		assert.equals([sebas,jorge,martin],telecom.vendedoresGenericos())
+		assert.equals([sebas,jorge],telecom.vendedoresGenericos())
 		assert.equals(true,telecom.esRobusto())
 		
 		const cuatro = new CertificacionCentro(puntos = 50)
 		telecom.repartirCertificacion(cuatro)
 		assert.equals([sebas,jorge,martin,agus],telecom.vendedoresGenericos())
 		assert.equals([sebas,jorge,martin],telecom.vendedorCandidato())
+		
+		assert.equals([martin],telecom.atenderClienteDetallista())
+		assert.equals([sebas,jorge,martin,agus],telecom.atenderClienteHumanista())
 	}
 	
 }

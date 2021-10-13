@@ -24,13 +24,16 @@ class Vendedor{
 
 class Fijo inherits Vendedor{
 	var property ciudad
+	var property personaFisica = true
 	
 	method puedeTrabajarEn(unaCiudad) = unaCiudad == ciudad
 	
 }
 
 class Viajante inherits Vendedor{
+	var property personaFisica = true
 	var provincias = []
+	
 	
 	method agregarProvincia(unaProvincia) = provincias.add(unaProvincia)
 	
@@ -41,6 +44,7 @@ class Viajante inherits Vendedor{
 
 class ComercioCorresponsal inherits Vendedor{
 	var ciudades = []
+	var property personaFisica = false
 	
 	method agregarCiudad(unaCiudad) = ciudades.add(unaCiudad)
 	

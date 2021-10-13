@@ -3,12 +3,14 @@ import vendedores.*
 class CentroDistribucion {
 	var vendedores = [] 
 	var sucursales = []
-	var clientes = []
+//	var clientes = []
 	var ciudad
 	
 	method ubicacion(unaCiudad) = unaCiudad == ciudad
 	
 	method agregarSucursal(unaSucursal) = sucursales.add(unaSucursal)
+	
+//	method agregarCliente(unCliente) = clientes.add(unCliente)
 	
 	method agregarVendedor(unVendedor){
 		if (vendedores.contains(unVendedor)){self.error("Este Trabajador ya existe en este Centro")}else{vendedores.add(unVendedor)}
@@ -34,6 +36,7 @@ class CentroDistribucion {
 	
 	method atenderClienteInseguro() = vendedores.filter{unVendedor => unVendedor.esVersatil() and unVendedor.esFirme()}
 	method atenderClienteDetallista() = vendedores.filter{unVendedor => unVendedor.totalCertificacionesEsProducto() >= 3}
+	method atenderClienteHumanista() = vendedores.filter{unVendedor => unVendedor.personaFisica()}
 	
 }
 
@@ -58,6 +61,6 @@ class CertificacionCentro{
 	var property esDeProducto = false
 }
 
-class ClienteInseguro{}
-class ClienteDetallista{}
-class ClienteHumanista{}
+//class ClienteInseguro{}
+//class ClienteDetallista{}
+//class ClienteHumanista{}
