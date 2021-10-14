@@ -8,7 +8,6 @@ describe "test de vendedores"{
 		const Concordia = new Ciudad(provincia = entreRios)
 		
 		const telecom = new CentroDistribucion(ciudad = Caseros)
-		const sucursal1 = new SucursalDelCentro(ciudad = Concordia)
 		
 		const sebas = new Fijo(ciudad = Caseros)
 		const martin = new Fijo(ciudad = Caseros)
@@ -21,7 +20,6 @@ describe "test de vendedores"{
 		const tres = new Certificacion(puntos = 10)
 
 	test "prueba de vendedor con centro"{
-		telecom.agregarSucursal(sucursal1)
 		jorge.agregarProvincia(buenosAires)
 		
 		sebas.agregarCertificacion(uno)
@@ -52,10 +50,10 @@ describe "test de vendedores"{
 		const cuatro = new CertificacionCentro(puntos = 50)
 		telecom.repartirCertificacion(cuatro)
 		assert.equals([sebas,jorge,martin,agus],telecom.vendedoresGenericos())
-		assert.equals([sebas,jorge,martin],telecom.vendedorCandidato())
-		
-		assert.equals([martin],telecom.atenderClienteDetallista())
-		assert.equals([sebas,jorge,martin,agus],telecom.atenderClienteHumanista())
+//		assert.equals([sebas,jorge,martin],telecom.vendedorCandidato())
+//		
+//		assert.equals([martin],telecom.vendedorQueAtiendeClienteDetallista())
+//		assert.equals([sebas,jorge,martin,agus],telecom.vendedorQueAtiendeClienteHumanista())
 	}
 	
 }

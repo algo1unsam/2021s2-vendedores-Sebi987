@@ -19,14 +19,17 @@ class Vendedor{
 	}
 	
 	method esInfluyente() = false
-
+	
+	method tieneAfinidadA(unCentroDeDistribucion) = self.puedeTrabajarEn(unCentroDeDistribucion.ciudad())
+	
+	method puedeTrabajarEn(unaCiudad)
 }
 
 class Fijo inherits Vendedor{
 	var property ciudad
 	var property personaFisica = true
 	
-	method puedeTrabajarEn(unaCiudad) = unaCiudad == ciudad
+	override method puedeTrabajarEn(unaCiudad) = unaCiudad == ciudad
 	
 }
 
@@ -37,7 +40,7 @@ class Viajante inherits Vendedor{
 	
 	method agregarProvincia(unaProvincia) = provincias.add(unaProvincia)
 	
-	method puedeTrabajarEn(unaCiudad) = provincias.contains(unaCiudad.provincia())
+	override method puedeTrabajarEn(unaCiudad) = provincias.contains(unaCiudad.provincia())
 	
 	override method esInfluyente() = provincias.sum({p => p.poblacion()}) >= 10000000
 }
@@ -48,11 +51,13 @@ class ComercioCorresponsal inherits Vendedor{
 	
 	method agregarCiudad(unaCiudad) = ciudades.add(unaCiudad)
 	
-	method puedeTrabajarEn(unaCiudad) = ciudades.contains(unaCiudad)
+	override method puedeTrabajarEn(unaCiudad) = ciudades.contains(unaCiudad)
 	
 	override method esInfluyente() = ciudades.size() >= 5 or self.estaEnMuchasProvincias()
 	
 	method estaEnMuchasProvincias() = ciudades.map{ c => c.provincia() }.withoutDuplicates().size() >= 3
+	
+	override method tieneAfinidadA(unCentroDeDistribucion) = ciudades.any({c => not unCentroDeDistribucion.cubrirCiudad(c)}) and super(unCentroDeDistribucion)
 }
 
 

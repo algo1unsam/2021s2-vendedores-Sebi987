@@ -2,16 +2,10 @@ import vendedores.*
 
 class CentroDistribucion {
 	var vendedores = [] 
-	var sucursales = []
-//	var clientes = []
 	var ciudad
 	
-	method ubicacion(unaCiudad) = unaCiudad == ciudad
-	
-	method agregarSucursal(unaSucursal) = sucursales.add(unaSucursal)
-	
-//	method agregarCliente(unCliente) = clientes.add(unCliente)
-	
+	method ciudad() = ciudad
+
 	method agregarVendedor(unVendedor){
 		if (vendedores.contains(unVendedor)){self.error("Este Trabajador ya existe en este Centro")}else{vendedores.add(unVendedor)}
 		}
@@ -32,28 +26,18 @@ class CentroDistribucion {
 		vendedores.forEach{unVendedor => unVendedor.agregarCertificacion(certificacion)}
 	}
 	
-	method vendedorCandidato() = vendedores.filter{unVendedor => unVendedor.puedeTrabajarEn(ciudad) and unVendedor.esVersatil()}
+	method vendedorCandidato() = vendedores.filter{unVendedor => unVendedor.tieneAfinidadA(self) and unVendedor.esVersatil()}
 	
-	method atenderClienteInseguro() = vendedores.filter{unVendedor => unVendedor.esVersatil() and unVendedor.esFirme()}
-	method atenderClienteDetallista() = vendedores.filter{unVendedor => unVendedor.totalCertificacionesEsProducto() >= 3}
-	method atenderClienteHumanista() = vendedores.filter{unVendedor => unVendedor.personaFisica()}
-	
+
 }
 
 class Ciudad{
 	var provincia
-	
 	method provincia() = provincia
 }
 
 class Provincia {
 	var property poblacion
-}
-
-class SucursalDelCentro{
-	var ciudad
-	
-	method ubicacion(unaCiudad) = unaCiudad == ciudad
 }
 
 class CertificacionCentro{
