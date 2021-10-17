@@ -1,59 +1,131 @@
 import vendedores.*
 import centrosDeDistribucion.*
 
-describe "test de vendedores"{
-		const buenosAires = new Provincia(poblacion = 10000)
-		const entreRios = new Provincia(poblacion = 15000)
+		const buenosAires = new Provincia(poblacion = 10000000)
+		const entreRios = new Provincia(poblacion = 1500000)
+		const misiones = new Provincia(poblacion = 50000)
+		const santaCruz = new Provincia(poblacion = 100000)
 		const Caseros = new Ciudad(provincia = buenosAires)
 		const Concordia = new Ciudad(provincia = entreRios)
+		const SanMartin = new Ciudad(provincia = buenosAires)
+		const Posadas = new Ciudad(provincia = misiones)
+		const Calafate = new Ciudad(provincia = santaCruz)
 		
 		const telecom = new CentroDistribucion(ciudad = Caseros)
+		const LopezyLopez = new CentroDistribucion(ciudad = Posadas)
 		
 		const sebas = new Fijo(ciudad = Caseros)
 		const martin = new Fijo(ciudad = Caseros)
 		const jorge = new Viajante()
 		const agus = new Fijo(ciudad = Caseros)
-
+		const ines = new ComercioCorresponsal()
 		
-		const uno = new Certificacion(puntos = 20,esDeProducto = true)
-		const dos = new Certificacion(puntos = 10)
-		const tres = new Certificacion(puntos = 10)
-
-	test "prueba de vendedor con centro"{
-		jorge.agregarProvincia(buenosAires)
+		const unoC = new Certificacion(puntos = 20,esDeProducto = true)
+		const dosC = new Certificacion(puntos = 10)
+		const tresC = new Certificacion(puntos = 10)
+		const cuatroC = new Certificacion(puntos = 50,esDeProducto = true)
+		const cincoC = new Certificacion(puntos = 30,esDeProducto = true)
+	
+		const unoCD = new CertificacionCentro(puntos = 50)
 		
-		sebas.agregarCertificacion(uno)
-		sebas.agregarCertificacion(dos)
-		sebas.esFirme()
+describe "test de vendedores"{
+		
+	test "Prueba vendedor Fijo, con certificados, TODO VERDADERO"{
+		assert.equals(true,sebas.puedeTrabajarEn(Caseros))
+		
+		sebas.agregarCertificacion(unoC)
+		sebas.agregarCertificacion(dosC)
+		sebas.agregarCertificacion(dosC)
+		sebas.agregarCertificacion(cuatroC)
+		
+		assert.equals(true,sebas.esVersatil())
 		assert.equals(true,sebas.esFirme())
-		jorge.agregarCertificacion(uno)
-		jorge.agregarCertificacion(dos)
-		assert.equals(true,jorge.esFirme())
-		martin.agregarCertificacion(uno)
-		martin.agregarCertificacion(uno)
-		martin.agregarCertificacion(uno)
-		assert.equals(true,martin.esFirme())
-		
-		telecom.agregarVendedor(sebas)
-		telecom.agregarVendedor(jorge)
-		telecom.agregarVendedor(martin)
-		telecom.agregarVendedor(agus)
-		
-		telecom.vendedorEstrella()
-		assert.equals(martin,telecom.vendedorEstrella())
-		
-		telecom.cubrirCiudad(Caseros)
-		
-		assert.equals([sebas,jorge],telecom.vendedoresGenericos())
-		assert.equals(true,telecom.esRobusto())
-		
-		const cuatro = new CertificacionCentro(puntos = 50)
-		telecom.repartirCertificacion(cuatro)
-		assert.equals([sebas,jorge,martin,agus],telecom.vendedoresGenericos())
-//		assert.equals([sebas,jorge,martin],telecom.vendedorCandidato())
-//		
-//		assert.equals([martin],telecom.vendedorQueAtiendeClienteDetallista())
-//		assert.equals([sebas,jorge,martin,agus],telecom.vendedorQueAtiendeClienteHumanista())
+		assert.equals(false,sebas.esInfluyente())
 	}
 	
+	test "Prueba vendedor Fijo, con certificados, TODO FALSO"{
+		assert.equals(true,sebas.puedeTrabajarEn(Caseros))
+		
+		sebas.agregarCertificacion(unoC)
+		
+		assert.equals(false,sebas.esVersatil())
+		assert.equals(false,sebas.esFirme())
+		assert.equals(false,sebas.esInfluyente())
+	}
+	
+	test "Prueba Vendedor Viajante, siendo Influyente"{
+		jorge.agregarProvincia(entreRios)
+		jorge.agregarProvincia(buenosAires)
+		
+		assert.equals(true,jorge.puedeTrabajarEn(Concordia))
+		assert.equals(false,jorge.puedeTrabajarEn(Posadas))
+		assert.equals(true,jorge.esInfluyente())
+	}
+	
+	test "Prueba Vendedor Viajante,NO siendo Influyente"{
+		jorge.agregarProvincia(entreRios)
+		
+		assert.equals(false,jorge.esInfluyente())
+	}
+	
+	test "Prueba Vendedor ComercioCorresponsal"{
+		ines.agregarCiudad(Caseros)
+		ines.agregarCiudad(Concordia)
+		ines.agregarCiudad(SanMartin)
+		
+		assert.equals(false,ines.esInfluyente())
+		assert.equals(true,ines.puedeTrabajarEn(Caseros))
+		assert.equals(false,ines.estaEnMuchasProvincias())
+	}
+	
+	test "Prueba Vendedor ComercioCorresponsal, Influyente"{
+		ines.agregarCiudad(Caseros)
+		ines.agregarCiudad(Concordia)
+		ines.agregarCiudad(SanMartin)
+		ines.agregarCiudad(Calafate)
+		
+		assert.equals(true,ines.esInfluyente())
+		assert.equals(true,ines.puedeTrabajarEn(Caseros))
+		assert.equals(true,ines.estaEnMuchasProvincias())
+	}
+// No se agregan certificaciones a los vendedores, ya que al haber cumplido en un vendedor,
+// en el resto, va a ser igual, ya que lo comparte por las herencias.
 }
+
+describe "test de Centro de Distribucion"{
+
+	test "Ciudad del Centro de Distribucion"{
+		assert.equals(Caseros,telecom.ciudad())
+	}
+
+}
+	
+//	test "prueba de vendedor con centro"{
+//		jorge.agregarProvincia(buenosAires)
+//		
+//		sebas.agregarCertificacion(unoC)
+//		sebas.agregarCertificacion(dosC)
+//		jorge.agregarCertificacion(unoC)
+//		jorge.agregarCertificacion(dosC)
+//		martin.agregarCertificacion(unoC)
+//		martin.agregarCertificacion(unoC)
+//		martin.agregarCertificacion(unoC)
+//		
+//		telecom.agregarVendedor(sebas)
+//		telecom.agregarVendedor(jorge)
+//		telecom.agregarVendedor(martin)
+//		telecom.agregarVendedor(agus)
+//		
+//		telecom.vendedorEstrella()
+//		assert.equals(martin,telecom.vendedorEstrella())
+//		
+//		telecom.cubrirCiudad(Caseros)
+//		
+//		assert.equals([sebas,jorge],telecom.vendedoresGenericos())
+//		assert.equals(true,telecom.esRobusto())
+//		
+//		telecom.repartirCertificacion(unoCD)
+//		assert.equals([sebas,jorge,martin,agus],telecom.vendedoresGenericos())
+//
+//	}
+	
