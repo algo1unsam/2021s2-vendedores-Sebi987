@@ -92,40 +92,100 @@ describe "test de vendedores"{
 // en el resto, va a ser igual, ya que lo comparte por las herencias.
 }
 
+
 describe "test de Centro de Distribucion"{
 
 	test "Ciudad del Centro de Distribucion"{
 		assert.equals(Caseros,telecom.ciudad())
 	}
+	
+	 test "Prueba de Vendedores con Centro de Distribucion, VENDEDOR ESTRELLA"{
+		jorge.agregarProvincia(buenosAires)
+		
+		sebas.agregarCertificacion(unoC)
+		sebas.agregarCertificacion(dosC)
+		jorge.agregarCertificacion(unoC)
+		jorge.agregarCertificacion(dosC)
+		martin.agregarCertificacion(unoC)
+		martin.agregarCertificacion(unoC)
+		martin.agregarCertificacion(unoC)
+		
+		telecom.agregarVendedor(sebas)
+		telecom.agregarVendedor(jorge)
+		telecom.agregarVendedor(martin)
+		telecom.agregarVendedor(agus)
+		
+		assert.equals(martin,telecom.vendedorEstrella())
+		assert.equals(true,telecom.cubrirCiudad(Caseros))
+	}	
+	
+	test "Centro de Distribucion, Cubre una Ciudad"{
+		sebas.agregarCertificacion(unoC)
+		sebas.agregarCertificacion(dosC)
+		jorge.agregarProvincia(buenosAires)
+		jorge.agregarCertificacion(unoC)
+		jorge.agregarCertificacion(dosC)
+		telecom.agregarVendedor(sebas)
+		telecom.agregarVendedor(jorge)
+		
+		assert.equals([sebas,jorge],telecom.vendedoresGenericos())
+	}
 
+	test "Centro de Distribucion NO es Robusto "{
+		sebas.agregarCertificacion(unoC)
+		jorge.agregarProvincia(buenosAires)
+		jorge.agregarCertificacion(unoC)
+		ines.agregarCertificacion(tresC)
+		telecom.agregarVendedor(sebas)
+		telecom.agregarVendedor(jorge)
+		telecom.agregarVendedor(ines)
+		
+		assert.equals(false,telecom.esRobusto())
+	}
+	
+	test "Centro de Distribucion ES Robusto "{
+		sebas.agregarCertificacion(unoC)
+		jorge.agregarProvincia(buenosAires)
+		jorge.agregarCertificacion(unoC)
+		jorge.agregarCertificacion(unoC)
+		ines.agregarCertificacion(cuatroC)
+		martin.agregarCertificacion(cincoC)
+		telecom.agregarVendedor(sebas)
+		telecom.agregarVendedor(jorge)
+		telecom.agregarVendedor(ines)
+		telecom.agregarVendedor(martin)
+		
+		assert.equals(true,telecom.esRobusto())
+	}
+	
+	test "Centro de Distribucion, VENDEDORES GENERICOS"{
+		sebas.agregarCertificacion(unoC)
+		jorge.agregarProvincia(buenosAires)
+		jorge.agregarCertificacion(dosC)
+		ines.agregarCertificacion(cuatroC)
+		martin.agregarCertificacion(dosC)
+		
+		telecom.agregarVendedor(sebas)
+		telecom.agregarVendedor(jorge)
+		telecom.agregarVendedor(ines)
+		telecom.agregarVendedor(martin)
+		
+		assert.equals([jorge,martin],telecom.vendedoresGenericos())
+	}
+	
+	test "Centro de Distribucion REPARTIR CERTIFICACION"{
+		sebas.agregarCertificacion(unoC)
+		jorge.agregarProvincia(buenosAires)
+		jorge.agregarCertificacion(dosC)
+		ines.agregarCertificacion(cuatroC)
+		martin.agregarCertificacion(dosC)
+		
+		telecom.agregarVendedor(sebas)
+		telecom.agregarVendedor(jorge)
+		telecom.agregarVendedor(ines)
+		telecom.agregarVendedor(martin)
+		
+		telecom.repartirCertificacion(unoCD)
+
+	}
 }
-	
-//	test "prueba de vendedor con centro"{
-//		jorge.agregarProvincia(buenosAires)
-//		
-//		sebas.agregarCertificacion(unoC)
-//		sebas.agregarCertificacion(dosC)
-//		jorge.agregarCertificacion(unoC)
-//		jorge.agregarCertificacion(dosC)
-//		martin.agregarCertificacion(unoC)
-//		martin.agregarCertificacion(unoC)
-//		martin.agregarCertificacion(unoC)
-//		
-//		telecom.agregarVendedor(sebas)
-//		telecom.agregarVendedor(jorge)
-//		telecom.agregarVendedor(martin)
-//		telecom.agregarVendedor(agus)
-//		
-//		telecom.vendedorEstrella()
-//		assert.equals(martin,telecom.vendedorEstrella())
-//		
-//		telecom.cubrirCiudad(Caseros)
-//		
-//		assert.equals([sebas,jorge],telecom.vendedoresGenericos())
-//		assert.equals(true,telecom.esRobusto())
-//		
-//		telecom.repartirCertificacion(unoCD)
-//		assert.equals([sebas,jorge,martin,agus],telecom.vendedoresGenericos())
-//
-//	}
-	
