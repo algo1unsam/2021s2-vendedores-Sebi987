@@ -96,7 +96,6 @@ describe "test de vendedores"{
 // en el resto, va a ser igual, ya que lo comparte por las herencias.
 }
 
-
 describe "test de Centro de Distribucion"{
 
 	test "Ciudad del Centro de Distribucion"{
