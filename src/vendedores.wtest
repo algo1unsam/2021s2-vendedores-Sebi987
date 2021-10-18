@@ -28,9 +28,13 @@ import centrosDeDistribucion.*
 	
 		const unoCD = new CertificacionCentro(puntos = 50)
 		
+		const monte = new ClienteInseguro()
+		const pablo = new ClienteDetallista()
+		const monica = new ClienteHumanista()
+		
 describe "test de vendedores"{
 		
-	test "Prueba vendedor Fijo, con certificados, TODO VERDADERO"{
+	test "Prueba vendedor Fijo, con certificados, ES VERSATIL"{
 		assert.equals(true,sebas.puedeTrabajarEn(Caseros))
 		
 		sebas.agregarCertificacion(unoC)
@@ -43,7 +47,7 @@ describe "test de vendedores"{
 		assert.equals(false,sebas.esInfluyente())
 	}
 	
-	test "Prueba vendedor Fijo, con certificados, TODO FALSO"{
+	test "Prueba vendedor Fijo, con certificados, NO ES VERSATIL"{
 		assert.equals(true,sebas.puedeTrabajarEn(Caseros))
 		
 		sebas.agregarCertificacion(unoC)
@@ -173,11 +177,30 @@ describe "test de Centro de Distribucion"{
 		assert.equals([jorge,martin],telecom.vendedoresGenericos())
 	}
 	
-	test "Centro de Distribucion REPARTIR CERTIFICACION"{
+//	test "Centro de Distribucion REPARTIR CERTIFICACION"{
+//		sebas.agregarCertificacion(unoC)
+//		jorge.agregarProvincia(buenosAires)
+//		jorge.agregarCertificacion(dosC)
+//		ines.agregarCertificacion(cuatroC)
+//		martin.agregarCertificacion(dosC)
+//		
+//		telecom.agregarVendedor(sebas)
+//		telecom.agregarVendedor(jorge)
+//		telecom.agregarVendedor(ines)
+//		telecom.agregarVendedor(martin)
+//		
+//		telecom.repartirCertificacion(unoCD)
+//	}
+
+	test "Centro de Distribucion, VENDEDOR CON AFINIDAD"{
 		sebas.agregarCertificacion(unoC)
+		
 		jorge.agregarProvincia(buenosAires)
 		jorge.agregarCertificacion(dosC)
+		
 		ines.agregarCertificacion(cuatroC)
+		ines.agregarCiudad(Posadas)
+		
 		martin.agregarCertificacion(dosC)
 		
 		telecom.agregarVendedor(sebas)
@@ -185,7 +208,63 @@ describe "test de Centro de Distribucion"{
 		telecom.agregarVendedor(ines)
 		telecom.agregarVendedor(martin)
 		
-		telecom.repartirCertificacion(unoCD)
-
+		
+		assert.equals(false,ines.tieneAfinidadA(telecom))
+		assert.equals(true,jorge.tieneAfinidadA(telecom))
+		assert.equals(true,sebas.tieneAfinidadA(telecom))
+		assert.equals(true,martin.tieneAfinidadA(telecom))
 	}
+	
+	test "Centro de Distribucion, VENDEDOR CANDIDATO"{
+		sebas.agregarCertificacion(cuatroC)
+		sebas.agregarCertificacion(dosC)
+		sebas.agregarCertificacion(unoC)
+		
+		jorge.agregarProvincia(buenosAires)
+		jorge.agregarCertificacion(dosC)
+		jorge.agregarCertificacion(tresC)		
+		jorge.agregarCertificacion(unoC)
+
+		ines.agregarCertificacion(cuatroC)
+		ines.agregarCiudad(Posadas)
+		
+		martin.agregarCertificacion(dosC)
+		
+		telecom.agregarVendedor(sebas)
+		telecom.agregarVendedor(jorge)
+		telecom.agregarVendedor(ines)
+		telecom.agregarVendedor(martin)
+		
+		assert.equals([sebas,jorge],telecom.vendedorCandidato())
+	}
+}
+
+describe "Atender Clientes"{
+		test "Cliente INSEGURO"{
+			sebas.agregarCertificacion(unoC)
+			sebas.agregarCertificacion(dosC)
+			sebas.agregarCertificacion(dosC)
+			sebas.agregarCertificacion(cuatroC)
+			martin.agregarCertificacion(dosC)
+			
+			assert.equals(false,monte.puedeSerAtendidoPor(martin))
+			assert.equals(true,monte.puedeSerAtendidoPor(sebas))
+		}
+		
+		test "Cliente DETALLISTA"{
+			jorge.agregarProvincia(entreRios)
+			jorge.agregarCertificacion(unoC)
+			jorge.agregarCertificacion(unoC)
+			jorge.agregarCertificacion(unoC)
+			sebas.agregarCertificacion(unoC)
+			
+			assert.equals(false,pablo.puedeSerAtendidoPor(sebas))
+			assert.equals(true,pablo.puedeSerAtendidoPor(jorge))
+		}
+		
+		test "Cliente HUMANISTA"{
+			assert.equals(true,monica.puedeSerAtendidoPor(sebas))
+			assert.equals(true,monica.puedeSerAtendidoPor(jorge))			
+		}
+		
 }
